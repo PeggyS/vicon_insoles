@@ -42,16 +42,20 @@ ylabel('Sum of all FSRs')
 title(side)
 xlabel('Time (s)')
 
+% use the calibration info to approximate force from the fsr voltage
+% app.coeff
+
 
 % Add listener to axes' 'XLim' 'PostSet' event (so it fires after axes
-% change).  Update the title so it's a visible change.
+% change).  Update the xmin and xmax values shown in edit boxes.
 addlistener(h_ax(1),'XLim','PostSet',@(~,~)xlimListenerFcn(h_ax));
 
 
 % create uicontrols
 create_uicontrols(app.(fig_str), app)
 
-% create close function callback to uncheck the box in the app window
+% create close function callback to uncheck the box in the app window and
+% remove linkprops
 checkbox_var = [upper(side(1)) lower(side(2:end)) 'InsoleCompositeCheckBox'];
 app.(fig_str).CloseRequestFcn = {@close_insole_fig_fcn, app.(checkbox_var)};
 
