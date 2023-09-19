@@ -14,6 +14,8 @@ for s_cnt = 1:length(s_list)
 			evt_var = [side(1) hs_or_to];
 			tbl = readtable(event_filename);
 			app.event_struct.(evt_var).times = tbl.time';
+			chkbox_var = [upper(evt_var) 'CheckBox'];
+			app.(chkbox_var).Value  = 1;
 		end
 	end
 end

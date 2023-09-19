@@ -17,19 +17,20 @@ if strcmp(read_or_write, 'read')
 		event_filename = default_save_filename;
 		return
 	end
-	quest = sprintf('Is there an event file: %s ?', default_save_filename);
-	tlt = 'Event file';
-	ans_butt = questdlg(quest, tlt, 'Yes, I will find it', 'No, compute events', 'No, compute events');
-	switch lower(ans_butt(1:3))
-		case 'yes'
-			disp('Choose event data')
-			[fname, pname] = uigetfile('*.csv', 'Choose event csv File');
-			if isequal(fname,0) || isequal(pname,0)
-				return
-			else
-				event_filename = fullfile(pname, fname);
-			end
-	end
+% 	quest = sprintf('Is there an event file: %s ?', default_save_filename);
+% 	tlt = 'Event file';
+% 	ans_butt = questdlg(quest, tlt, 'Yes, I will find it', 'No, compute events', 'No, compute events');
+% 	switch lower(ans_butt(1:3))
+% 		case 'yes'
+% 			disp('Choose event data')
+% 			[fname, pname] = uigetfile('*.csv', 'Choose event csv File');
+% 			if isequal(fname,0) || isequal(pname,0)
+% 				return
+% 			else
+% 				event_filename = fullfile(pname, fname);
+% 			end
+% 	end
+
 	return
 end % if finding the file to read
 

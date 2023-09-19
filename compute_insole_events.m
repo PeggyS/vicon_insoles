@@ -5,49 +5,29 @@ if ~isfield(app.vicon_data, 'devices')
 	return
 end
 
-if nargin < 4
-	threshold = [];
-end
+% if nargin < 4
+% 	threshold = [];
+% end
 
-% is there insole data to use?
-tmp = regexpi(app.vicon_data.devices.tbl.Properties.VariableNames, '.*_emg_.*Voltage_');
-if any(~cellfun(@isempty, tmp))
-	% time
-	t = app.vicon_data.devices.tbl.Frame / 100 + app.vicon_data.devices.tbl.Sub_Frame/1000;
-	
-	% use insole data
-	fsr_list = {'Lat_Heel', 'Med_Heel', 'Lat_Instep', 'Lat_MT', 'Center_MT', 'Med_MT', 'Lat_Toe', 'Med_Toe'};
-	all_fsr_data = nan(length(t), length(fsr_list));
-	% discover what the fsr variable name prefix is
-	var_prefix = find_fsr_var_prefix(app.vicon_data.devices.tbl);
-	for cnt = 1:8
-		fsr_var = [var_prefix upper(side(1)) '_' fsr_list{cnt} '_V'];
-		all_fsr_data(:,cnt) = app.vicon_data.devices.tbl.(fsr_var);
-	end
+% is there fsr force est line?
+fig_str = ['figure_insole_' lower(side) '_composite'];
+h_line = findobj(app.(fig_str), 'Tag', ['line_fsr_' lower(side(1)) '_force_est']);
 
-	composite_data = sum(all_fsr_data, 2);
-
-	if isempty(threshold)
-		threshold = (max(composite_data) - min(composite_data)) * 0.2 + min(composite_data);
-	end
+if isgraphics(h_line)
+	t = h_line.XData;
+	composite_data = h_line.YData;
 	% compute heel strike & toe off events
 	switch hs_or_to
-		case 'hs'
-% 			data.lat_heel = app.vicon_data.devices.tbl(:, [var_prefix upper(side) '_Lat_Heel_V']);
-% 			data.med_heel = app.vicon_data.devices.tbl(:, [var_prefix upper(side) '_Med_Heel_V']);
-% 			times = find_hs_times_from_fsrs(t, data, threshold);
-			
+		case 'hs'			
 			times = find_hs_times(t, composite_data, threshold);
 		case 'to'
-% 			data.lat_toe = app.vicon_data.devices.tbl(:, [var_prefix upper(side) '_Lat_Toe_V']);
-% 			data.med_toe = app.vicon_data.devices.tbl(:, [var_prefix upper(side) '_Med_Toe_V']);
 			times = find_to_times(t, composite_data, threshold);
 		
 	end
 end
 
 % save info in a struct
-app.event_struct.([side hs_or_to]).times = times;
+app.event_struct.([side(1) hs_or_to]).times = times;
 
 return % compute_insole_events
 
