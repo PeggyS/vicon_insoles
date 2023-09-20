@@ -36,6 +36,10 @@ for e_cnt = 1:length(evt_list)
 		
 		% save the event table
 		writetable(out_tbl, save_filename);
+
+		% check the box in the app - showing hs or to events are now present/saved
+		chkbox_var = [upper(evt) 'CheckBox'];
+		app.(chkbox_var).Value = 1;
 	end
 	
 end % hs & to events

@@ -10,6 +10,14 @@ end
 % end
 
 % is there fsr force est line?
+if length(side) < 4
+	if contains(side, 'l')
+		side = 'left';
+	else
+		side = 'right';
+	end
+end
+
 fig_str = ['figure_insole_' lower(side) '_composite'];
 h_line = findobj(app.(fig_str), 'Tag', ['line_fsr_' lower(side(1)) '_force_est']);
 

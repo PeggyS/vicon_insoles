@@ -66,11 +66,20 @@ ed_obj = findobj(app.(fig_str), 'Tag', 'threshold_edit');
 ed_obj.String = num2str(thresh);
 yyaxis(h_ax, 'left')
 h_l = line(h_ax.XLim, [thresh thresh], 'Color', 'k');
-draggable(h_l, 'vertical', 'endfcn', @thresh_line_endfcn)
+draggable(h_l, 'vertical', 'endfcn', @thresh_line_endfcn);
 
-% compute hs & to events from thresh
-compute_insole_events(app, side, 'hs', thresh)
-compute_insole_events(app, side, 'to', thresh)
+% if not already read in from file, or present, compute hs & to events from thresh
+if isempty(app.event_struct)
+	compute_insole_events(app, side, 'hs', thresh)
+	compute_insole_events(app, side, 'to', thresh)
+else
+	if ~isfield(app.event_struct, [lower(side(1)), 'hs'])
+		compute_insole_events(app, side, 'hs', thresh)
+	end
+	if ~isfield(app.event_struct, [lower(side(1)), 'to'])
+		compute_insole_events(app, side, 'to', thresh)
+	end
+end
 
 % update axis xmin and xmax values in edit boxes
 ed_obj = findobj(app.(fig_str), 'Tag', 'edit_axes_min');
@@ -92,6 +101,9 @@ return
 
 % ---------------------------
 function create_uicontrols(h_fig, app)
+if app.NoEEGdataCheckBox.Value == 1
+	enable = 'off';
+end
 uicontrol(h_fig, ...
 		'Style', 'checkbox', ...
 		'Tag', 'show_eeg_events_chkbx', ...
@@ -100,7 +112,10 @@ uicontrol(h_fig, ...
 		'Position', [0.0187,0.95,0.2,0.0166], ...
 		'FontSize', 12, ...
 		'Value', 0, ...
+		'Enable', enable, ...
 		'Callback', {@pb_show_eeg_events_callback, app});
+
+
 uicontrol(h_fig, ...
 		'Style', 'checkbox', ...
 		'Tag', 'show_hs_lat_chkbx', ...
