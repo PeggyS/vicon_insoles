@@ -9,6 +9,7 @@ function h = demo_datatip
     h.fig = figure ;
     h.ax = axes ;
     h.plot = plot(x,y) ;
+	h.plot.Tag = 'line_data';
 
 	% add menu to add vertical lines
 	hcmenu = uicontextmenu;
@@ -41,7 +42,7 @@ function hdtip = add_datatips( evt_times , hTarget )
                   'MarkerEdgeColor','r', 'Marker','o', 'HitTest','off');
 
         %// move it into the right place
-        idx = find( xdata == evt_times(idt) ) ;%// find the index of the corresponding time
+        idx = find( xdata >= evt_times(idt), 1, 'first' ) ;%// find the index of the corresponding time
         pos = [xdata(idx) , ydata(idx) ,1 ];
 		set(hdtip(idt), 'Position', pos)
 %         updateDataCursors(cursorMode);
@@ -63,3 +64,6 @@ function menuAddVline_Callback(hObject, ~, h_ax)
 	evt_time = cursor_pos(1);
 
 	h_l = line([evt_time evt_time], h_ax.YLim);
+	h_data_line = findobj(h_ax, 'Tag', 'line_data');
+	add_datatips(evt_time, h_data_line)
+
