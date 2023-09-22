@@ -47,17 +47,21 @@ h_ax.Tag = ['axes_' lower(side(1)) '_composite'];
 yyaxis(h_ax, 'left')
 create_axes_CMenu(h_ax)
 % force estimate line
-line(t, composite_force_est, ...
+h_force_line = plot(t, composite_force_est, ...
 	'Tag', ['line_fsr_' lower(side(1)) '_force_est']);
 ylabel('Foot Z-force Estimate')
 title(side)
 xlabel('Time (s)')
 
+% change the datatip template for the force line
+dtt = h_force_line.DataTipTemplate;
+dtt.DataTipRows(1).Label = 'time';
+dtt.DataTipRows(2).Label = 'force';
 
 % fsr voltage line
 % use the scale on the right side of axes
 yyaxis(h_ax, 'right')
-line(t, fsr_composite_data_V, 'Tag', ['line_fsr_' lower(side(1)) '_composite_V'])
+plot(t, fsr_composite_data_V, 'Tag', ['line_fsr_' lower(side(1)) '_composite_V'])
 ylabel('Composite FSR (V)')
 
 % add threshold line
@@ -103,7 +107,9 @@ return
 function create_uicontrols(h_fig, app)
 if app.NoEEGdataCheckBox.Value == 1
 	enable = 'off';
-end
+else
+	enable = 'on'
+;end
 uicontrol(h_fig, ...
 		'Style', 'checkbox', ...
 		'Tag', 'show_eeg_events_chkbx', ...

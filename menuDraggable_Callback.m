@@ -13,6 +13,6 @@ else
 	% it's off, turn it on
 	set(hObject, 'Checked', 'on')
 	% make it draggable
-	draggable( hLine, 'horizontal', @vertLineMotionFcn);   %, 'endfcn', @endVertLineMotionFcn);
+	draggable( hLine, 'h', @vertLineMotionFcn);   %, 'endfcn', @endVertLineMotionFcn);
 
 end
