@@ -1,13 +1,13 @@
-function pb_save_events_callback(~, ~, h_fig)
+function pb_save_events_callback(~, ~, h_fig, app)
 
-% get the app 
-app_win = findobj('Name', 'Vicon Insole App');
-if isempty(app_win)
-	app_win = findwind('Vicon Insole App', 'Name');
-end
-assert(isa(app_win, 'matlab.ui.Figure'), 'did not find Vicon Insole App')
-
-app = app_win.RunningAppInstance;
+% % get the app 
+% app_win = findobj('Name', 'Vicon Insole App');
+% if isempty(app_win)
+% 	app_win = findwind('Vicon Insole App', 'Name');
+% end
+% assert(isa(app_win, 'matlab.ui.Figure'), 'did not find Vicon Insole App')
+% 
+% app = app_win.RunningAppInstance;
 
 name_split = strsplit(lower(h_fig.Name));
 side = name_split{1}(1);
