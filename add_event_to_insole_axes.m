@@ -24,8 +24,11 @@ for ax_cnt = 1:length(h_ax_list)
 		idx = find(dt.DataSource.XData >= h_l.XData(1), 1, 'first');
 		dt.Position = [dt.DataSource.XData(idx) dt.DataSource.YData(idx) 0];
 
-		% save datatip in vertica line userdata
+		% save datatip in vertical line userdata
 		h_l(ax_cnt).UserData.datatip = dt;
+
+		% add deletefcn to remove the datatip when the line is deleted
+		h_l.DeleteFcn = @line_delete_dt_fcn;
 
 % 		val_str = get_line_display_data(h_l(ax_cnt));
 % 		h_txt = text(h_ax, evt_time, mean(h_ax.YLim), val_str, 'Visible', 'off');

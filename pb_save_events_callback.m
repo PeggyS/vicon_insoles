@@ -14,6 +14,14 @@ side = name_split{1}(1);
 
 vicon_fname = app.EditFieldViconFilename.Value;
 
+% get the threshold file name
+threshold_filename = get_threshold_file(vicon_fname,  'write');
+if isempty(threshold_filename)
+	disp('No insole thresholds being saved')
+else
+	writestruct(app.fsr_event_threshold_struct, threshold_filename)
+end
+
 % vicon heel strike & toe off events
 evt_list = {'hs' 'to'};
 for e_cnt = 1:length(evt_list)
@@ -38,7 +46,7 @@ for e_cnt = 1:length(evt_list)
 		writetable(out_tbl, save_filename);
 
 		% check the box in the app - showing hs or to events are now present/saved
-		chkbox_var = [upper(evt) 'CheckBox'];
+		chkbox_var = [upper(evt_var) 'CheckBox'];
 		app.(chkbox_var).Value = 1;
 	end
 	

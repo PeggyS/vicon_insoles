@@ -65,11 +65,15 @@ plot(t, fsr_composite_data_V, 'Tag', ['line_fsr_' lower(side(1)) '_composite_V']
 ylabel('Composite FSR (V)')
 
 % add threshold line
-thresh = (max(composite_force_est) - min(composite_force_est)) * 0.1 + min(composite_force_est);
+if isfield(app.fsr_event_threshold_struct, lower(side))
+	thresh = app.fsr_event_threshold_struct.(lower(side));
+else
+	thresh = (max(composite_force_est) - min(composite_force_est)) * 0.1 + min(composite_force_est);
+end
 ed_obj = findobj(app.(fig_str), 'Tag', 'threshold_edit');
 ed_obj.String = num2str(thresh);
 yyaxis(h_ax, 'left')
-h_l = line(h_ax.XLim, [thresh thresh], 'Color', 'k');
+h_l = line(h_ax.XLim, [thresh thresh], 'Color', 'k', 'Tag', 'line_threshold');
 draggable(h_l, 'vertical', 'endfcn', @thresh_line_endfcn);
 
 % if not already read in from file, or present, compute hs & to events from thresh

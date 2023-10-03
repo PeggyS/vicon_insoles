@@ -10,12 +10,15 @@ for s_cnt = 1:length(s_list)
 		
 		event_filename = get_event_file(vicon_fname, side, hs_or_to, 'read');
 		
-		if exist(event_filename, 'file')
-			evt_var = [side(1) hs_or_to];
+		evt_var = [side(1) hs_or_to];
+		chkbox_var = [upper(evt_var) 'CheckBox'];
+		if exist(event_filename, 'file')			
 			tbl = readtable(event_filename);
 			app.event_struct.(evt_var).times = tbl.time';
-			chkbox_var = [upper(evt_var) 'CheckBox'];
 			app.(chkbox_var).Value  = 1;
+		else
+			app.event_struct.(evt_var).times = [];
+			app.(chkbox_var).Value  = 0;
 		end
 	end
 end
