@@ -78,13 +78,19 @@ draggable(h_l, 'vertical', 'endfcn', @thresh_line_endfcn);
 
 % if not already read in from file, or present, compute hs & to events from thresh
 if isempty(app.event_struct)
+	keyboard
 	compute_insole_events(app, side, 'hs', thresh)
 	compute_insole_events(app, side, 'to', thresh)
 else
 	if ~isfield(app.event_struct, [lower(side(1)), 'hs'])
+		keyboard
+		compute_insole_events(app, side, 'hs', thresh)
+	elseif isempty(app.event_struct.([lower(side(1)), 'hs']).times)
 		compute_insole_events(app, side, 'hs', thresh)
 	end
 	if ~isfield(app.event_struct, [lower(side(1)), 'to'])
+		compute_insole_events(app, side, 'to', thresh)
+	elseif isempty(app.event_struct.([lower(side(1)), 'to']).times)
 		compute_insole_events(app, side, 'to', thresh)
 	end
 end

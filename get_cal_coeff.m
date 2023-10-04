@@ -14,13 +14,15 @@ if contains(save_loc, [filesep 'data' filesep], 'IgnoreCase', true)
 	end
 end
 
-fname = fullfile(save_loc, 'insole_cal_coeffs.txt');
+% file name .xml (using built-in read and writestruct) 
+fname = fullfile(save_loc, 'insole_cal_coeffs.xml');
 if ~exist(fname, 'file')
 	uialert(app.ViconInsoleAppUIFigure, ['No insole calibration data in ' save_loc ])
 	return
 end
 
-coeff = read_struct(fname);
+% read in struct
+coeff = readstruct(fname);
 
 % verify there are 2 fields, left & right and both contain a vector of 2 values
 fld_names = fieldnames(coeff);
