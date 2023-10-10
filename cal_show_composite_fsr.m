@@ -18,7 +18,7 @@ end
 
 composite_data = sum(all_fsr_data, 2);
 
-% add y-axis on the right
+% add y-axis on the left
 yyaxis(h_ax, 'left')
 ylabel(h_ax, 'Sum FSRs (V)')
 

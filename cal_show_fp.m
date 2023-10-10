@@ -7,14 +7,24 @@ function cal_show_fp(app, h_ax, side)
 % Frame = sec/100; Sub_Frame = milliseconds after the frame
 t = app.vicon_data.devices.tbl.Frame / 100 + app.vicon_data.devices.tbl.Sub_Frame/1000;
 
-% fp num and label depends on left or right side
+% fp num and label depends on radio button
 switch side
 	case 'left'
-		y_lab = 'FP1 (N)';
-		fp_num = 1;
+		if app.LeftInsoleFP1Button.Value == 1
+			y_lab = 'FP1 (N)';
+			fp_num = 1;
+		else
+			y_lab = 'FP2 (N)';
+			fp_num = 2;
+		end
 	case 'right'
-		y_lab = 'FP2 (N)';
-		fp_num = 2;
+		if app.RightInsoleFP1Button.Value == 1
+			y_lab = 'FP1 (N)';
+			fp_num = 1;
+		else
+			y_lab = 'FP2 (N)';
+			fp_num = 2;
+		end
 	otherwise
 		y_lab = '?';
 		return
