@@ -9,7 +9,8 @@ if contains(save_loc, [filesep 'data' filesep], 'IgnoreCase', true)
 	save_loc = strrep(lower(save_loc), [filesep 'data' filesep], [filesep 'analysis' filesep]);
 	% if it doesn't exist, inform the user there is no calibration data
 	if ~exist(save_loc, 'dir')
-		uialert(app.ViconInsoleAppUIFigure, ['No insole calibration data. Folder ' save_loc ' does not exist.'])
+		msg = ['No insole calibration data. Folder ' save_loc ' does not exist.'];
+		uialert(app.ViconInsoleAppUIFigure, msg, 'Calibration Error', 'Icon', 'error' )
 		return
 	end
 end
@@ -17,7 +18,8 @@ end
 % file name .xml (using built-in read and writestruct) 
 fname = fullfile(save_loc, 'insole_cal_coeffs.xml');
 if ~exist(fname, 'file')
-	uialert(app.ViconInsoleAppUIFigure, ['No insole calibration data in ' save_loc ])
+	msg = ['No insole calibration data in ' save_loc ];
+	uialert(app.ViconInsoleAppUIFigure, msg, 'Calibration Error', 'Icon', 'error')
 	return
 end
 

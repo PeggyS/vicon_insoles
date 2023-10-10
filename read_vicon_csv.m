@@ -54,7 +54,7 @@ data.filename = filename;
 txt = fgetl(fid);
 % remove wierd first character that seems to be present in vicon nexus
 % 2.8.2 when exporting accelerations
-if double(txt(1)) == 65279
+if ~isempty(txt) > 0 && double(txt(1)) == 65279
 	txt = txt(2:end);
 end
 	
