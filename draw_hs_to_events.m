@@ -20,28 +20,28 @@ for e_cnt = 1:length(app.caller_app.event_struct.(inv_hs).times)
 	t = app.caller_app.event_struct.(inv_hs).times(e_cnt);
 
 	line(app.UIAxes_inv_heel, [t t], app.UIAxes_inv_heel.YLim, 'Color', 'k', 'LineWidth', 1)
-	line(app.UIAxes_inv_toe, [t t], app.UIAxes_inv_toe.YLim, 'Color', 'k', 'LineWidth', 1)
+	line(app.UIAxes_inv_insole, [t t], app.UIAxes_inv_insole.YLim, 'Color', 'k', 'LineWidth', 1)
 end
 % inv to
 for e_cnt = 1:length(app.caller_app.event_struct.(inv_to).times)
 	t = app.caller_app.event_struct.(inv_to).times(e_cnt);
 
 	line(app.UIAxes_inv_heel, [t t], app.UIAxes_inv_heel.YLim, 'Color', 'g', 'LineWidth', 1)
-	line(app.UIAxes_inv_toe, [t t], app.UIAxes_inv_toe.YLim, 'Color', 'g', 'LineWidth', 1)
+	line(app.UIAxes_inv_insole, [t t], app.UIAxes_inv_insole.YLim, 'Color', 'g', 'LineWidth', 1)
 end
 % uninv hs
 for e_cnt = 1:length(app.caller_app.event_struct.(uninv_hs).times)
 	t = app.caller_app.event_struct.(uninv_hs).times(e_cnt);
 
 	line(app.UIAxes_uninv_heel, [t t], app.UIAxes_uninv_heel.YLim, 'Color', 'k', 'LineWidth', 1)
-	line(app.UIAxes_uninv_toe, [t t], app.UIAxes_uninv_toe.YLim, 'Color', 'k', 'LineWidth', 1)
+	line(app.UIAxes_uninv_insole, [t t], app.UIAxes_uninv_insole.YLim, 'Color', 'k', 'LineWidth', 1)
 end
 % uninv to
 for e_cnt = 1:length(app.caller_app.event_struct.(uninv_to).times)
 	t = app.caller_app.event_struct.(uninv_to).times(e_cnt);
 
 	line(app.UIAxes_uninv_heel, [t t], app.UIAxes_uninv_heel.YLim, 'Color', 'g', 'LineWidth', 1)
-	line(app.UIAxes_uninv_toe, [t t], app.UIAxes_uninv_toe.YLim, 'Color', 'g', 'LineWidth', 1)
+	line(app.UIAxes_uninv_insole, [t t], app.UIAxes_uninv_insole.YLim, 'Color', 'g', 'LineWidth', 1)
 end
 
 
