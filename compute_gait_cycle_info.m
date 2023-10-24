@@ -149,7 +149,7 @@ for gc_cnt = 1:num_gcs
 	ds_loading_uninvolved_insole_max(gc_cnt) = max(data);
 	ds_loading_uninvolved_insole_mean(gc_cnt) = mean(data);
 	ds_loading_uninvolved_insole_auc(gc_cnt) = trapz(t, data);
-	% during double stand unloading: between uninvolved_hs_time and involved_to_time
+	% during double stance unloading: between uninvolved_hs_time and involved_to_time
 	data = insole.involved.force(insole.involved.t >= uninvolved_hs_time(gc_cnt) & insole.involved.t <= involved_to_time(gc_cnt));
 	t = insole.involved.t(insole.involved.t >= uninvolved_hs_time(gc_cnt) & insole.involved.t <= involved_to_time(gc_cnt));
 	ds_unloading_involved_insole_max(gc_cnt) = max(data);
