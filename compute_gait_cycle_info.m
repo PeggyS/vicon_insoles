@@ -9,11 +9,11 @@ else
 	uninv_side = 'r';
 end
 
-% keyboard
-inv_hs_times = app.caller_app.event_struct.([inv_side 'hs']).times;
-inv_to_times = app.caller_app.event_struct.([inv_side 'to']).times;
-uninv_hs_times = app.caller_app.event_struct.([uninv_side 'hs']).times;
-uninv_to_times = app.caller_app.event_struct.([uninv_side 'to']).times;
+% event times (sort them, so they are in order)
+inv_hs_times = sort(app.caller_app.event_struct.([inv_side 'hs']).times);
+inv_to_times = sort(app.caller_app.event_struct.([inv_side 'to']).times);
+uninv_hs_times = sort(app.caller_app.event_struct.([uninv_side 'hs']).times);
+uninv_to_times = sort(app.caller_app.event_struct.([uninv_side 'to']).times);
 
 % verify the uninv toe off is included in the 1st gait cycle. If not, use the
 % next gait cycle as the first one
