@@ -14,7 +14,7 @@ default_save_loc = strrep(lower(default_save_loc), [filesep 'nirs-eeg' filesep],
 % end
 
 tmp = regexp(data_fn, '(_\d+)', 'match');
-eeg_evt_fname = ['eeg' tmp{1} '_events.txt'];
+eeg_evt_fname = ['eeg' tmp{1} '_events.xml'];
 default_save_filename = fullfile(default_save_loc, eeg_evt_fname);
 
 if strcmp(read_or_write, 'read')
@@ -22,13 +22,13 @@ if strcmp(read_or_write, 'read')
 		event_filename = default_save_filename;
 		return
 	end
-	quest = sprintf('Is there an event file: %s ?', default_save_filename);
+	quest = sprintf('Is there an eeg event file: %s ?', default_save_filename);
 	tlt = 'Event file';
 	ans_butt = questdlg(quest, tlt, 'Yes, I will find it', 'No', 'No');
 	switch lower(ans_butt(1:3))
 		case 'yes'
 			disp('Choose event data')
-			[fname, pname] = uigetfile('*.txt', 'Choose event txt File');
+			[fname, pname] = uigetfile('*.txt', 'Choose eeg event xml File');
 			if isequal(fname,0) || isequal(pname,0)
 				return
 			else
@@ -57,8 +57,8 @@ if strcmp(read_or_write, 'write')
 			case 'yes'
 				event_filename = default_save_filename;
 			case 'no'
-				disp('choose file to save event data')
-				[fname, pname] = uiputfile('*.txt', 'Choose event save txt File');
+				disp('choose file to save eeg event data')
+				[fname, pname] = uiputfile('*.txt', 'Choose eeg event save xml File');
 				if isequal(fname,0) || isequal(pname,0)
 	% 				disp('User pressed cancel')
 					return

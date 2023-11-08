@@ -60,7 +60,7 @@ if ~isempty(app.eeg_events)
 		disp('No eeg events being saved')
 	else
 		% using built-in writestruct 
-		writestruct(event_filename, app.eeg_events)
+		writestruct(app.eeg_events, event_filename)
 	end
 end
 

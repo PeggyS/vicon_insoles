@@ -3,7 +3,8 @@ function add_eeg_event_lines(app, h_ax_list)
 % which block of events to show?
 block_number = app.BlockNumberEditField.Value;
 if block_number < 1 || block_number > length(app.eeg_events.vicon_start)
-	error('Invalid block number value. EEG data has %d blocks.', length(app.eeg_events.vicon_start))
+	error('Invalid block number value. EEG data has %d blocks. Choose a valid block number in Vicon Insole App', ...
+		length(app.eeg_events.vicon_start))
 end
 
 t_start = app.eeg_events.vicon_start(block_number);
