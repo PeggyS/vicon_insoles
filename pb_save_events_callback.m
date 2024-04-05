@@ -18,8 +18,11 @@ vicon_fname = app.EditFieldViconFilename.Value;
 threshold_filename = get_threshold_file(vicon_fname,  'write');
 if isempty(threshold_filename)
 	disp('No insole thresholds being saved')
-else
+elseif ~isempty(app.fsr_event_threshold_struct)
 	writestruct(app.fsr_event_threshold_struct, threshold_filename)
+else
+	beep
+	disp('fsr event threshold not saved. The line was probably not moved. If you want to save the threshold, move the line and resave events.')
 end
 
 % vicon heel strike & toe off events
