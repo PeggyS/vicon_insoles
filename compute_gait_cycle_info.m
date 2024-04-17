@@ -36,14 +36,16 @@ if isfield(app.caller_app.eeg_events, 'vicon_start')
 		trial_uninv_to_times = all_uninv_to_times(all_uninv_to_times > walk_times(trial_cnt) & ...
 			all_uninv_to_times < turn_times(trial_cnt));
 
-		if isempty(app.gc_data_tbl)
-			app.gc_data_tbl = compute_gc_data_tbl(app, trial_inv_hs_times, trial_inv_to_times, ...
-				trial_uninv_hs_times, trial_uninv_to_times);
-		else
-			tmp_tbl = compute_gc_data_tbl(app, trial_inv_hs_times, trial_inv_to_times, ...
-				trial_uninv_hs_times, trial_uninv_to_times);
-			app.gc_data_tbl = vertcat(app.gc_data_tbl, tmp_tbl);
-		end
+		if ~isempty(trial_inv_hs_times) % in case there are no hs times, don't compute gait cycle info
+			if isempty(app.gc_data_tbl)
+				app.gc_data_tbl = compute_gc_data_tbl(app, trial_inv_hs_times, trial_inv_to_times, ...
+					trial_uninv_hs_times, trial_uninv_to_times);
+			else
+				tmp_tbl = compute_gc_data_tbl(app, trial_inv_hs_times, trial_inv_to_times, ...
+					trial_uninv_hs_times, trial_uninv_to_times);
+				app.gc_data_tbl = vertcat(app.gc_data_tbl, tmp_tbl);
+			end
+		end % if not hs times
 	end
 else
 	app.gc_data_tbl = compute_gc_data_tbl(app, all_inv_hs_times, all_inv_to_times, ...
