@@ -12,7 +12,7 @@ if ~isfield(app.vicon_data, 'devices')
 end
 
 fig_str = ['figure_insole_' lower(side) '_composite'];
-fig_pos = [1116         260         800        800];
+fig_pos = [1 152 2560 800];
 
 % insole figure is saved in the main app app
 app.(fig_str) = figure('Pos', fig_pos, 'Tag', fig_str, 'Name', [side ' Composite FSR Insole']);
