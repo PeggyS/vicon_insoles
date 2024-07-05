@@ -26,7 +26,24 @@ if block_num > 0 && block_num <= length(app.eeg_events.vicon_start)
 	data(:,1) = b_num';
 	data(:,2) = app.eeg_events.walk(walk_event_msk)' - vicon_start;
 	if sum(turn_event_msk)>0
-		data(:,3) = app.eeg_events.turn_stop(turn_event_msk)' - vicon_start;
+		try
+			data(:,3) = app.eeg_events.turn_stop(turn_event_msk)' - vicon_start;
+		catch ME1
+			% Get last segment of the error identifier.
+			idSegLast = regexp(ME1.identifier,'(?<=:)\w+$','match');
+			if contains(idSegLast, 'subsassigndimmismatch')
+				% guess that the number of turn_stop events is less than the number of walk events
+				tmp_data = app.eeg_events.turn_stop(turn_event_msk)' - vicon_start;
+				
+				% try again
+				try
+					data(1:length(tmp_data),3) = tmp_data;
+				catch ME2
+					ME2 = addCause(ME2, ME1);
+					rethrow(ME2)
+				end
+			end
+		end
 	end
 	if sum(rest_event_msk)>0
 		try
@@ -38,14 +55,14 @@ if block_num > 0 && block_num <= length(app.eeg_events.vicon_start)
 			if contains(idSegLast, 'subsassigndimmismatch')
 				% guess that the number of rest events is less than the number of turn_stop and walk events
 				tmp_data = app.eeg_events.rest(rest_event_msk)' - vicon_start;
-				% add nans so dimensions agree
-				if length(tmp_data) < size(data,1)
-					num_rows_to_add =  size(data,1) - length(tmp_data);
-					tmp_data(end+1:end+num_rows_to_add) = nan(num_rows_to_add,1);
-				end
+% 				% add nans so dimensions agree
+% 				if length(tmp_data) < size(data,1)
+% 					num_rows_to_add =  size(data,1) - length(tmp_data);
+% 					tmp_data(end+1:end+num_rows_to_add) = nan(num_rows_to_add,1);
+% 				end
 				% try again
 				try
-					data(:,4) = tmp_data;
+					data(1:length(tmp_data),4) = tmp_data;
 				catch ME2
 					ME2 = addCause(ME2, ME1);
 					rethrow(ME2)

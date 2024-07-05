@@ -9,6 +9,13 @@ else
 	uninv_side = 'r';
 end
 
+% make sure there are enough hs & to times to compute a gait cycle.
+if length(inv_hs_times) < 2 || isempty(inv_to_times) || ...
+	length(uninv_hs_times) < 2 || isempty(uninv_to_times) 
+	gc_data_tbl = table();
+	return
+end
+
 % verify the uninv toe off is included in the 1st gait cycle. If not, use the
 % next gait cycle as the first one
 % uninv toe off
@@ -77,6 +84,10 @@ for gc_cnt = 1:num_gcs
 	gc_end_time(gc_cnt) = inv_hs_times(gc_cnt+1);
 	% inv to off
 	ind = find(inv_to_times>inv_hs_times(gc_cnt) & inv_to_times<inv_hs_times(gc_cnt+1));
+	if isempty(ind)
+		% found no toe offs
+		break
+	end
 	assert(length(ind)==1, 'involved %s side: found %d toe offs between %f and %f', ...
 		inv_side, length(ind), inv_hs_times(gc_cnt), inv_hs_times(gc_cnt+1))
 	involved_to_time(gc_cnt) = inv_to_times(ind);
