@@ -27,7 +27,7 @@ end
 
 
 % trial number
-tmp_str = regexpi(filename, '(?<tr_num>\d+)\.csv', 'names');
+tmp_str = regexpi(filename, 'trial(?<tr_num>\d+).*\.csv', 'names');
 if ~isempty(tmp_str)
 	app.trial_num = str2double(tmp_str.tr_num);
 else
