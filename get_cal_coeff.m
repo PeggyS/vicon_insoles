@@ -28,7 +28,7 @@ coeff = readstruct(fname);
 
 % verify there are 2 fields, left & right and both contain a vector of 2 values
 fld_names = fieldnames(coeff);
-assert(length(fld_names) == 2, 'Error getting cinsole calibration coefficients. 2 fields were not found.')
+assert(length(fld_names) >= 2 && length(fld_names) <= 3, 'Error getting insole calibration coefficients. 2 or 3 fields were not found.')
 assert(any(contains(fld_names, 'left')), 'Error getting insole calibration coefficients. left field not found.')
 assert(any(contains(fld_names, 'right')), 'Error getting insole calibration coefficients. right field not found.')
 assert(length(coeff.(fld_names{1})) == 2, ['Error getting insole calibration coefficients. ' ...
